@@ -15,12 +15,8 @@ param(
 $ErrorActionPreference = 'Stop'
 
 Write-Host "Publishing mdmore ($Runtime)..." -ForegroundColor Cyan
-dotnet publish "$PSScriptRoot\mdmore.csproj" `
-    -c Release -r $Runtime --self-contained `
-    -p:PublishSingleFile=true `
-    -p:EnableCompressionInSingleFile=true `
-    -p:InvariantGlobalization=true `
-    -o $OutDir
+# Single-file / self-contained settings live in mdmore.csproj (Release config).
+dotnet publish "$PSScriptRoot\mdmore.csproj" -c Release -r $Runtime -o $OutDir
 if ($LASTEXITCODE -ne 0) { throw "dotnet publish failed." }
 
 $exe = Join-Path $OutDir 'mdmore.exe'

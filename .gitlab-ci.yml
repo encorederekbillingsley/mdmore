@@ -5,14 +5,8 @@ build-windows:
   stage: build
   image: mcr.microsoft.com/dotnet/sdk:10.0
   script:
-    - dotnet publish mdmore.csproj
-        -c Release
-        -r win-x64
-        --self-contained true
-        -p:PublishSingleFile=true
-        -p:DebugType=none
-        -p:PublishReadyToRun=false
-        -o publish/
+    # Single-file / self-contained settings live in mdmore.csproj (Release config).
+    - dotnet publish mdmore.csproj -c Release -r win-x64 -o publish/
   artifacts:
     name: mdmore-win-x64
     paths:
