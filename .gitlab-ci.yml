@@ -1,0 +1,25 @@
+stages:
+  - build
+
+build-windows:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:10.0
+  script:
+    - dotnet publish mdmore.csproj
+        -c Release
+        -r win-x64
+        --self-contained true
+        -p:PublishSingleFile=true
+        -p:DebugType=none
+        -p:PublishReadyToRun=false
+        -o publish/
+  artifacts:
+    name: mdmore-win-x64
+    paths:
+      - publish/mdmore.exe
+    expire_in: 30 days
+  tags:
+    - docker-exec
+  only:
+    - main
+    - tags
